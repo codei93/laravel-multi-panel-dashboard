@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -44,17 +45,17 @@ class DefaultPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->userMenuItems([
-                MenuItem::make()
+                Action::make('admin_panel')
                     ->label('Admin Panel')
                     ->url('/default')
                     ->icon('heroicon-o-home'),
 
-                MenuItem::make()
+                Action::make('blog_panel')
                     ->label('Blog Panel')
                     ->url('/blog')
                     ->icon('heroicon-o-document-text'),
 
-                MenuItem::make()
+                Action::make('travel_panel')
                     ->label('Travel Panel')
                     ->url('/travel')
                     ->icon('heroicon-o-globe-alt'),
