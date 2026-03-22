@@ -2,9 +2,10 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Panel;
 use Filament\Pages\Dashboard;
-use Filament\Widgets\{AccountWidget, FilamentInfoWidget};
+use Filament\Panel;
+use Filament\Widgets\AccountWidget;
+use Filament\Widgets\FilamentInfoWidget;
 
 class TravelPanelProvider extends BasePanelProvider
 {
@@ -14,6 +15,7 @@ class TravelPanelProvider extends BasePanelProvider
             ->id('travel')
             ->path('travel')
             ->login()
+            //->middleware(['access_travel_panel'])
             ->pages([Dashboard::class])
             ->discoverResources(in: app_path('Filament/Travel/Resources'), for: 'App\Filament\Travel\Resources')
             ->discoverPages(in: app_path('Filament/Travel/Pages'), for: 'App\Filament\Travel\Pages')

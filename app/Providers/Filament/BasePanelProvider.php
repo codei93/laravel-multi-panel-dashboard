@@ -2,21 +2,22 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Actions\Action;
+use Filament\Http\Middleware\Authenticate;
+use Filament\Http\Middleware\AuthenticateSession;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentView;
-use Illuminate\Support\Facades\Blade;
-use Filament\Http\Middleware\{Authenticate, AuthenticateSession, DisableBladeIconComponents, DispatchServingFilamentEvent};
-use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Pages\Dashboard;
-use Filament\Widgets\{AccountWidget, FilamentInfoWidget};
-use Filament\Support\Colors\Color;
-use Filament\Actions\Action;
-
 
 abstract class BasePanelProvider extends PanelProvider
 {
@@ -54,10 +55,25 @@ abstract class BasePanelProvider extends PanelProvider
 
     protected function userMenuItems(): array
     {
-        return [
-            Action::make('admin_panel')->label('Admin Panel')->url('/default')->icon('heroicon-o-home'),
-            Action::make('blog_panel')->label('Blog Panel')->url('/blog')->icon('heroicon-o-document-text'),
-            Action::make('travel_panel')->label('Travel Panel')->url('/travel')->icon('heroicon-o-globe-alt'),
-        ];
+        $items = [];
+        //$user = auth()->user();
+
+        //if (! $user) {
+        //  return $items;
+        //}
+
+        //if ($user->can('access_default_panel')) {
+        $items[] = Action::make('admin_panel')->label('Admin Panel')->url('/default')->icon('heroicon-o-home');
+        //}
+
+        //if ($user->can('access_blog_panel')) {
+        $items[] = Action::make('blog_panel')->label('Blog Panel')->url('/blog')->icon('heroicon-o-document-text');
+        //}
+
+        //if ($user->can('access_travel_panel')) {
+        $items[] = Action::make('travel_panel')->label('Travel Panel')->url('/travel')->icon('heroicon-o-globe-alt');
+        //}
+
+        return $items;
     }
 }

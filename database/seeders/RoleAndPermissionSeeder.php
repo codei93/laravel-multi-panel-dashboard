@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleAndPermissionSeeder extends Seeder
 {
@@ -37,17 +39,33 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         $this->command->line('');
-        $this->command->info('Fetching all permissions from database...');
-        $permissions = $this->getAllPermissions();
+        $this->command->info('Reading permissions from JSON file...');
+        $permissions = $this->getPermissionsFromJson();
         $permissionCount = $permissions->count();
-        $this->command->info("Found {$permissionCount} permission(s)");
+        $this->command->info("Found {$permissionCount} permission(s) in JSON file");
         $this->command->line('');
 
         if ($permissionCount === 0) {
-            $this->command->warn('No permissions found! Run "php artisan shield:generate --all" first to generate permissions.');
+            $this->command->warn('No permissions found in JSON file!');
         } else {
-            $this->command->info('Syncing all permissions to super_admin role...');
-            $role->syncPermissions($permissions);
+            $this->command->info('Creating permissions from JSON and syncing to super_admin role...');
+            $createdPermissions = [];
+
+            foreach ($permissions as $permissionData) {
+                $permission = Permission::firstOrCreate(
+                    ['name' => $permissionData['name'], 'guard_name' => 'web']
+                );
+                $createdPermissions[] = $permission;
+
+                if ($permission->wasRecentlyCreated) {
+                    $this->command->info("Created permission: {$permissionData['name']}");
+                }
+            }
+
+            $role->syncPermissions($createdPermissions);
+
+            app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
             $this->command->info("Assigned {$permissionCount} permission(s) to role '{$superAdminRoleName}'");
         }
 
@@ -57,12 +75,19 @@ class RoleAndPermissionSeeder extends Seeder
     }
 
     /**
-     * Get all existing permissions from the database.
-     *
-     * @return Collection|Permission[]
+     * Get permissions from JSON file.
      */
-    protected function getAllPermissions(): Collection
+    protected function getPermissionsFromJson(): Collection
     {
-        return Permission::all();
+        $jsonPath = database_path('data/permissions.json');
+
+        if (! File::exists($jsonPath)) {
+            return collect([]);
+        }
+
+        $jsonContent = File::get($jsonPath);
+        $permissions = json_decode($jsonContent, true);
+
+        return collect($permissions ?? []);
     }
 }

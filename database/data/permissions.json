@@ -1,0 +1,11 @@
+[
+    {
+        "name":"access_default_panel"
+    },
+    {
+        "name":"access_blog_panel"
+    },
+    {
+        "name":"access_travel_panel"
+    }
+]

@@ -2,10 +2,11 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Panel;
-use Filament\Pages\Dashboard;
-use Filament\Widgets\{AccountWidget, FilamentInfoWidget};
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\Pages\Dashboard;
+use Filament\Panel;
+use Filament\Widgets\AccountWidget;
+use Filament\Widgets\FilamentInfoWidget;
 
 class DefaultPanelProvider extends BasePanelProvider
 {
@@ -16,6 +17,7 @@ class DefaultPanelProvider extends BasePanelProvider
             ->id('default')
             ->path('default')
             ->login()
+            //->middleware(['access_default_panel'])
             ->pages([Dashboard::class])
             ->discoverResources(in: app_path('Filament/Default/Resources'), for: 'App\Filament\Default\Resources')
             ->discoverPages(in: app_path('Filament/Default/Pages'), for: 'App\Filament\Default\Pages')

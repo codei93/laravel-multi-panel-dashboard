@@ -2,6 +2,8 @@
 
 namespace App\Filament\Default\Resources\Users\Schemas;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class UserForm
@@ -10,7 +12,11 @@ class UserForm
     {
         return $schema
             ->components([
-                //
+                Section::make()->schema([
+                    TextInput::make('name')->required(),
+                    TextInput::make('email')->required()->email(),
+                    TextInput::make('password')->required()->password(),
+                ]),
             ]);
     }
 }

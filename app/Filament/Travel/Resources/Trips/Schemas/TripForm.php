@@ -4,6 +4,7 @@ namespace App\Filament\Travel\Resources\Trips\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class TripForm
@@ -12,17 +13,19 @@ class TripForm
     {
         return $schema
             ->components([
-                Select::make('customer_id')
-                    ->relationship('customer', 'name')
-                    ->required(),
-                TextInput::make('title')
-                    ->required(),
-                TextInput::make('slug')
-                    ->required(),
-                TextInput::make('total_price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
+                Section::make()->schema([
+                    Select::make('customer_id')
+                        ->relationship('customer', 'name')
+                        ->required(),
+                    TextInput::make('title')
+                        ->required(),
+                    TextInput::make('slug')
+                        ->required(),
+                    TextInput::make('total_price')
+                        ->required()
+                        ->numeric()
+                        ->prefix('$'),
+                ]),
             ]);
     }
 }
