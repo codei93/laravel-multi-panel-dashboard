@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             RoleAndPermissionSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
-            CustomerSeeder::class,
             PostSeeder::class,
+            CustomerSeeder::class,
             TripSeeder::class,
         ]);
     }
