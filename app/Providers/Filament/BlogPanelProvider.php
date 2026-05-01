@@ -2,11 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Blog\Widgets\BlogOverview;
 use Filament\Pages\Dashboard;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Panel;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 
 class BlogPanelProvider extends BasePanelProvider
 {
@@ -17,18 +15,10 @@ class BlogPanelProvider extends BasePanelProvider
             ->path('blog')
             ->login()
             ->middleware([\App\Http\Middleware\AccessBlogPanel::class])
-            ->plugins([
-                FilamentShieldPlugin::make(),
-            ])
             ->pages([Dashboard::class])
             ->discoverResources(in: app_path('Filament/Blog/Resources'), for: 'App\Filament\Blog\Resources')
             ->discoverPages(in: app_path('Filament/Blog/Pages'), for: 'App\Filament\Blog\Pages')
             ->discoverWidgets(in: app_path('Filament/Blog/Widgets'), for: 'App\Filament\Blog\Widgets')
-            ->widgets(
-                [
-                    AccountWidget::class,
-                    FilamentInfoWidget::class,
-                ]
-            );
+            ->widgets([BlogOverview::class]);
     }
 }

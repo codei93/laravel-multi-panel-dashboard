@@ -1,0 +1,4 @@
+[mcp_servers.laravel-boost]
+command = "wsl.exe"
+args = ["/usr/bin/php8.3", "/home/cod3i/laravel-multi-panel-dashboard/artisan", "boost:mcp"]
+cwd = "/home/cod3i/laravel-multi-panel-dashboard"

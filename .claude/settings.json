@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php -l app/Filament/Default/Resources/Roles/RoleResource.php)",
+      "Bash(php artisan tinker '--execute= *)",
+      "Bash(php artisan *)",
+      "Bash(php -l app/Filament/Default/Resources/Roles/Pages/EditRole.php)",
+      "Bash(php -l app/Filament/Default/Resources/Roles/Pages/CreateRole.php)",
+      "Bash(php -l app/Filament/Default/Resources/Roles/Pages/ListRoles.php)",
+      "Bash(php -l app/Filament/Default/Resources/Roles/Pages/ViewRole.php)",
+      "Bash(xargs ls *)",
+      "Bash(php -l /home/cod3i/laravel-multi-panel-dashboard/app/Filament/Default/Resources/Users/Schemas/UserForm.php)",
+      "Bash(xargs cat *)",
+      "Bash(grep -n 'plugin->register\\\\|plugin\\\\->register\\\\|$plugin->register\\\\|->register\\($this\\)' /home/cod3i/laravel-multi-panel-dashboard/vendor/filament/filament/src/Panel.php)",
+      "Bash(php -l /home/cod3i/laravel-multi-panel-dashboard/app/Filament/Default/Resources/Roles/RoleResource.php)"
+    ],
+    "additionalDirectories": [
+      "/home/cod3i/laravel-multi-panel-dashboard/app/Filament/Default/Resources"
+    ]
+  }
+}

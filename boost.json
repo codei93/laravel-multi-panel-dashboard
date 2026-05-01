@@ -1,13 +1,22 @@
 {
     "agents": [
-        "copilot"
+        "copilot",
+        "claude_code",
+        "opencode",
+        "amp",
+        "codex"
     ],
+    "cloud": true,
     "guidelines": true,
-    "herd_mcp": false,
     "mcp": true,
-    "nightwatch_mcp": false,
+    "nightwatch": false,
+    "packages": [
+        "filament/filament"
+    ],
     "sail": false,
     "skills": [
-        "pest-testing"
+        "laravel-best-practices",
+        "pest-testing",
+        "tailwindcss-development"
     ]
 }

@@ -2,11 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Default\Widgets\UsersOverview;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 
 class DefaultPanelProvider extends BasePanelProvider
 {
@@ -23,11 +22,6 @@ class DefaultPanelProvider extends BasePanelProvider
             ->discoverPages(in: app_path('Filament/Default/Pages'), for: 'App\Filament\Default\Pages')
             ->discoverWidgets(in: app_path('Filament/Default/Widgets'), for: 'App\Filament\Default\Widgets')
             ->plugins([FilamentShieldPlugin::make()])
-            ->widgets(
-                [
-                    AccountWidget::class,
-                    FilamentInfoWidget::class,
-                ]
-            );
+            ->widgets([UsersOverview::class]);
     }
 }
