@@ -17,7 +17,7 @@ class DefaultPanelProvider extends BasePanelProvider
             ->id('default')
             ->path('default')
             ->login()
-            //->middleware(['access_default_panel'])
+            ->middleware([\App\Http\Middleware\AccessDefaultPanel::class])
             ->pages([Dashboard::class])
             ->discoverResources(in: app_path('Filament/Default/Resources'), for: 'App\Filament\Default\Resources')
             ->discoverPages(in: app_path('Filament/Default/Pages'), for: 'App\Filament\Default\Pages')

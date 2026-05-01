@@ -32,7 +32,7 @@ abstract class BasePanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->colors(['primary' => Color::Amber])
+            ->colors(['primary' => Color::Emerald])
             ->userMenuItems($this->userMenuItems())
             ->middleware($this->middleware())
             ->authMiddleware([Authenticate::class]);
@@ -55,25 +55,22 @@ abstract class BasePanelProvider extends PanelProvider
 
     protected function userMenuItems(): array
     {
-        $items = [];
-        //$user = auth()->user();
-
-        //if (! $user) {
-        //  return $items;
-        //}
-
-        //if ($user->can('access_default_panel')) {
-        $items[] = Action::make('admin_panel')->label('Admin Panel')->url('/default')->icon('heroicon-o-home');
-        //}
-
-        //if ($user->can('access_blog_panel')) {
-        $items[] = Action::make('blog_panel')->label('Blog Panel')->url('/blog')->icon('heroicon-o-document-text');
-        //}
-
-        //if ($user->can('access_travel_panel')) {
-        $items[] = Action::make('travel_panel')->label('Travel Panel')->url('/travel')->icon('heroicon-o-globe-alt');
-        //}
-
-        return $items;
+        return [
+            Action::make('admin_panel')
+                ->label('Admin Panel')
+                ->url('/default')
+                ->icon('heroicon-o-home')
+                ->visible(fn (): bool => (bool) auth()->user()?->can('access_default_panel')),
+            Action::make('blog_panel')
+                ->label('Blog Panel')
+                ->url('/blog')
+                ->icon('heroicon-o-document-text')
+                ->visible(fn (): bool => (bool) auth()->user()?->can('access_blog_panel')),
+            Action::make('travel_panel')
+                ->label('Travel Panel')
+                ->url('/travel')
+                ->icon('heroicon-o-globe-alt')
+                ->visible(fn (): bool => (bool) auth()->user()?->can('access_travel_panel')),
+        ];
     }
 }
