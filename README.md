@@ -55,20 +55,61 @@ A Laravel 12 application with multiple Filament admin panels (Default, Blog, Tra
    php artisan migrate
    ```
 
-6. **Seed the database**
+6. **Set up Filament Shield**
+
+   Shield powers the role/permission system across all three panels. Run the
+   commands below in order — `shield:setup` is required once for the project,
+   while `shield:install` must be run for **each** panel.
+
+   ```bash
+   # One-time core setup (publishes config + migrations, runs migrations)
+   php artisan shield:setup
+
+   # Install Shield into each panel (creates the Role resource, etc.)
+   php artisan shield:install default
+   php artisan shield:install blog
+   php artisan shield:install travel
+
+   # Generate policies & permissions for all discovered Filament resources
+   php artisan shield:generate --all
+   ```
+
+7. **Seed the database**
+
+   The seeders create the panel-access permissions, the `super_admin` role,
+   and a default super admin user.
+
    ```bash
    php artisan db:seed
    ```
 
-7. **Build assets**
+   To promote an existing user to super admin instead, use:
+
+   ```bash
+   php artisan shield:super-admin --user={user_id}
+   ```
+
+8. **Build assets**
    ```bash
    npm run build
    ```
 
-8. **Start the development server**
+9. **Start the development server**
    ```bash
    php artisan serve
    ```
+
+### Useful Shield commands
+
+| Command | Purpose |
+|---------|---------|
+| `php artisan shield:setup` | Publishes Shield config and migrates core tables |
+| `php artisan shield:install {panel}` | Registers Shield (Role resource etc.) on a panel |
+| `php artisan shield:generate --all` | Generates permissions/policies for all resources |
+| `php artisan shield:generate --resource=PostResource` | Generate for a single resource |
+| `php artisan shield:super-admin --user={id}` | Assign the `super_admin` role to a user |
+| `php artisan shield:seeder` | Build a seeder from current roles/permissions |
+| `php artisan shield:publish` | Publish Shield's Role resource for customisation |
 
 ## Usage
 
